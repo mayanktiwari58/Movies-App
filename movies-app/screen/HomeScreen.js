@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View,Image,Platform,TouchableOpacity,ActivityIndicator,FlatList } from 'react-native'
 import React from 'react'
+import MoviePoster from '../component/MoviePoster'
 
 
 const movies=[{
@@ -7,11 +8,12 @@ const movies=[{
     "Description":"Perter Parker Europe with his friends",
     "imgUrl":"https://picsum.photos/600/600",
     "category":{
-        "title":"action"
+        "title":"Action"
     }
 }]
 
 const HomeScreen = (props) => {
+    const {navigation}=props;
   return (
     <View style={styles.container}>
      <FlatList
@@ -19,7 +21,12 @@ const HomeScreen = (props) => {
         data={movies}
         numColumns={2}
         contentContainerStyle={styles.scrollContent}
-        renderItem={({item, index})=><Text>{item.title}</Text>}
+        renderItem={({item, index})=>(
+            <MoviePoster
+                movie={item}
+                onPress={()=>navigation.navigate('Detail',{movie:item})}
+            />
+        )}
      />
     </View>
   )
@@ -32,7 +39,8 @@ const styles = StyleSheet.create({
     backgroundColor:"#fff"
    },
    scrollContent:{
-    paddingTop:50,
+   paddingRight:10,
+  
    }
 })
 
